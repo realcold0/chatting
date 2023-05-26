@@ -1,5 +1,6 @@
 package com.capstone.chatting.Service;
 
+import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,7 @@ public class MessageSenderService {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    public void sendMessage(String message) {
-        rabbitTemplate.convertAndSend("chatExchange", "chatRoutingKey", message);
+    public void sendMessage(Message message) {
+        rabbitTemplate.convertAndSend("topic.exchange", "sample.realcold.#", message);
     }
 }
