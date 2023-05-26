@@ -8,6 +8,6 @@ public class MessageListenerService {
     @RabbitListener(queues = "sample.queue")
     public void handleMessage(String message) {
         // RabbitMQ로부터 수신한 메시지 처리
-        System.out.println("수신한 메시지: " + message);
+        System.out.println("receive from queue: " + message);
     }
 }

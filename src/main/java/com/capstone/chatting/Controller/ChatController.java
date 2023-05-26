@@ -23,7 +23,8 @@ public class ChatController {
     @MessageMapping("/sendMessage")
     @SendTo("/topic/message")
     public String sendMessage(String message){
-        String processedMessage = "서버에서 보낸 메시지: " + message;
+        String processedMessage = "from server: " + message;
+
         return processedMessage;
     }
 }
