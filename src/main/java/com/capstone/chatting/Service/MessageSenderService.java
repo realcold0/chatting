@@ -13,6 +13,7 @@ public class MessageSenderService {
     }
 
     public void sendMessage(Message message) {
+        System.out.println("message Send!!");
         rabbitTemplate.convertAndSend("topic.exchange", "sample.realcold.#", message);
     }
 }

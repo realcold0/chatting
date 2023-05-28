@@ -10,10 +10,19 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 @Component
 @Log4j2
 public class ChatWebSocketHandler extends TextWebSocketHandler {
     private final RabbitTemplate rabbitTemplate;
+
+    public Map<String, WebSocketSession> getSessions() {
+        return sessions;
+    }
+
+    private final Map<String, WebSocketSession> sessions = new ConcurrentHashMap<>();
 
     @Autowired
     public ChatWebSocketHandler(RabbitTemplate rabbitTemplate) {
@@ -33,6 +42,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session)throws Exception{
+        sessions.put(session.getId(), session);
 
         System.out.println("클라이언트 접속"+ session);
 
@@ -41,6 +51,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception{
         System.out.println(session + "클라이언트 접속 해제");
+        sessions.remove(session.getId());
 
     }
 
