@@ -12,8 +12,8 @@ public class MessageSenderService {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    public void sendMessage(Message message) {
-        System.out.println("message Send!!");
+    public void sendMessage(String message) {
+        System.out.println("message Send!! by Rabbit");
         rabbitTemplate.convertAndSend("topic.exchange", "sample.realcold.#", message);
     }
 }

@@ -25,7 +25,8 @@ public class MessageListenerService {
 
         for (WebSocketSession session : chatWebSocketHandler.getSessions().values()) {
             try {
-                session.sendMessage(new TextMessage(message));
+                session.sendMessage(new TextMessage(message)); //클라이언트로 보내짐
+
             } catch (Exception e) {
                 log.error("Failed to send message to WebSocket client", e);
             }
