@@ -1,36 +1,77 @@
 package com.capstone.chatting.Config;
 
+import com.fasterxml.jackson.databind.Module;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
 @Configuration
+@EnableRabbit
 public class RabbitConfig {
+
+
+
+    private static final String CHAT_QUEUE_NAME = "sample.queue";
+    private static final String CHAT_EXCHANGE_NAME = "topic.exchange";
+    private static final String ROUTING_KEY = "room.*";
+
     @Bean
-    public Queue chatQueue() {
-        return new Queue("sample.queue");
-    }
+    public Queue queue(){ return new Queue(CHAT_QUEUE_NAME, true); }
 
     @Bean
     public TopicExchange chatExchange() {
-        return new TopicExchange("topic.exchange");
+        return new TopicExchange(CHAT_EXCHANGE_NAME);
     }
 
     @Bean
     public Binding chatBinding(Queue chatQueue, TopicExchange chatExchange) {
-        return BindingBuilder.bind(chatQueue).to(chatExchange).with("sample.realcold.#");
+        return BindingBuilder.bind(chatQueue).to(chatExchange).with(ROUTING_KEY);
+    }
+
+
+    @Bean
+    public Jackson2JsonMessageConverter jsonMessageConverter(){
+        //LocalDateTime serializable을 위해
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, true);
+        objectMapper.registerModule(dateTimeModule());
+
+        Jackson2JsonMessageConverter converter = new Jackson2JsonMessageConverter(objectMapper);
+
+        return converter;
     }
 
     @Bean
-    public Jackson2JsonMessageConverter jsonMessageConverter() {
-        return new Jackson2JsonMessageConverter();
+    public Module dateTimeModule() {
+        return new JavaTimeModule();
+    }
+
+    @Bean
+    public RabbitTemplate rabbitTemplate(){
+        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory());
+        rabbitTemplate.setMessageConverter(jsonMessageConverter());
+        rabbitTemplate.setRoutingKey(CHAT_QUEUE_NAME);
+        return rabbitTemplate;
+    }
+    @Bean
+    public ConnectionFactory connectionFactory(){
+        CachingConnectionFactory factory = new CachingConnectionFactory();
+        factory.setHost("localhost");
+        factory.setUsername("guest");
+        factory.setPassword("guest");
+        return factory;
     }
 
 
