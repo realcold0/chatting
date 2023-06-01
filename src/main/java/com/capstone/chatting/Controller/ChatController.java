@@ -24,7 +24,7 @@ public class ChatController {
     private final RabbitTemplate template;
 
     private final Map<String, WebSocketSession> sessions ;
-    private final static String CHAT_EXCHANGE_NAME = "topic.exchange";
+    private final static String CHAT_EXCHANGE_NAME = "amq.topic";
     private final static String CHAT_QUEUE_NAME = "sample.queue";
 
 
