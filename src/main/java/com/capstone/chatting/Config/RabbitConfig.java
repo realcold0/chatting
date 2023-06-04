@@ -22,11 +22,9 @@ import org.springframework.context.annotation.Configuration;
 @EnableRabbit
 public class RabbitConfig {
 
-
-
-    private static final String CHAT_QUEUE_NAME = "sample.queue";
-    private static final String CHAT_EXCHANGE_NAME = "topic.exchange";
-    private static final String ROUTING_KEY = "room.*";
+    private static final String CHAT_QUEUE_NAME = "matching.queue";
+    private static final String CHAT_EXCHANGE_NAME = "matching.exchange";
+    private static final String ROUTING_KEY = "matching.key";
 
     @Bean
     public Queue queue(){ return new Queue(CHAT_QUEUE_NAME, true); }
@@ -45,6 +43,7 @@ public class RabbitConfig {
     public RabbitAdmin rabbitAdmin(ConnectionFactory connectionFactory) {
         return new RabbitAdmin(connectionFactory);
     }
+
     @Bean
     public Jackson2JsonMessageConverter jsonMessageConverter(){
         //LocalDateTime serializable을 위해
@@ -72,19 +71,18 @@ public class RabbitConfig {
     @Bean
     public ConnectionFactory connectionFactory(){
         CachingConnectionFactory factory = new CachingConnectionFactory();
-        factory.setHost("localhost");
+        factory.setHost("13.209.204.63");
         factory.setUsername("guest");
         factory.setPassword("guest");
         return factory;
     }
 
-
-    @Bean
-    public SimpleRabbitListenerContainerFactory simpleRabbitListenerContainerFactory(ConnectionFactory connectionFactory) {
-        final SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
-        factory.setConnectionFactory(connectionFactory);
-        factory.setMessageConverter(jsonMessageConverter());
-        return factory;
-    }
+//    @Bean
+//    public SimpleRabbitListenerContainerFactory simpleRabbitListenerContainerFactory(ConnectionFactory connectionFactory) {
+//        final SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+//        factory.setConnectionFactory(connectionFactory);
+//        factory.setMessageConverter(jsonMessageConverter());
+//        return factory;
+//    }
 
 }

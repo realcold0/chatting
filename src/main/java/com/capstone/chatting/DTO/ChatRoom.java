@@ -29,8 +29,6 @@ public class ChatRoom {
                 .build();
     }
 
-
-
     public void handlerActions(WebSocketSession session, ChatMessage chatMessage, ChatRoomService chatService) {
         if (chatMessage.getType().equals(ChatMessage.MessageType.Enter)) {
             sessions.add(session);

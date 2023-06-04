@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class MessageSenderService {
+
     private final RabbitTemplate rabbitTemplate;
-
-
 
     public void sendMessage(String message) {
         System.out.println("message Send!! by Rabbit");
         rabbitTemplate.convertAndSend("topic.exchange", "sample.realcold.#", message);
     }
+
 }

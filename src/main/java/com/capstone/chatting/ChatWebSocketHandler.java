@@ -20,11 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @RequiredArgsConstructor
 public class ChatWebSocketHandler extends TextWebSocketHandler {
 
-
-
-
     private final Map<String, WebSocketSession> sessions ;
-
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
@@ -41,17 +37,13 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session)throws Exception{
         sessions.put(session.getId(), session);
-
         System.out.println("클라이언트 접속"+ session);
-
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception{
         System.out.println(session + "클라이언트 접속 해제");
         sessions.remove(session.getId());
-
     }
-
 
 }

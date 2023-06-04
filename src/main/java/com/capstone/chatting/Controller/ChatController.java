@@ -23,42 +23,33 @@ public class ChatController {
 
     private final RabbitTemplate template;
 
-    private final Map<String, WebSocketSession> sessions ;
+    private final Map<String, WebSocketSession> sessions;
     private final static String CHAT_EXCHANGE_NAME = "amq.topic";
     private final static String CHAT_QUEUE_NAME = "sample.queue";
 
-
-
-
     private final MessageSenderService messageSenderService;
-
 
     @MessageMapping("chat.enter.{chatRoomId}")
     public void sendMessage(String chatMessage, @DestinationVariable String chatRoomId){
         System.out.println("send message : " + chatMessage);
 
         template.convertAndSend(CHAT_EXCHANGE_NAME, "room." + chatRoomId,chatMessage);
-
     }
 
-
-
-    @RabbitListener(queues = CHAT_QUEUE_NAME)
-    public void handleMessage(String message) {
-        // RabbitMQ로부터 수신한 메시지 처리
-        System.out.println("receive from queue: " + message);
-
-        for (WebSocketSession session : sessions.values()) {
-            try {
-
-                session.sendMessage(new TextMessage(message)); //클라이언트로 보내짐
-
-                System.out.println("To send : "+ session);
-            } catch (Exception e) {
-                log.error("Failed to send message to WebSocket client", e);
-            }
-        }
-
-    }
-
+//    @RabbitListener(queues = CHAT_QUEUE_NAME)
+//    public void handleMessage(String message) {
+//        // RabbitMQ로부터 수신한 메시지 처리
+//        System.out.println("receive from queue: " + message);
+//
+//        for (WebSocketSession session : sessions.values()) {
+//            try {
+//
+//                session.sendMessage(new TextMessage(message)); //클라이언트로 보내짐
+//
+//                System.out.println("To send : "+ session);
+//            } catch (Exception e) {
+//                log.error("Failed to send message to WebSocket client", e);
+//            }
+//        }
+//    }
 }

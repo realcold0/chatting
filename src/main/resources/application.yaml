@@ -1,8 +1,29 @@
 server:
   port: 9081
+
 spring:
   rabbitmq:
     port: 5672
-    host: localhost
+    host: 13.209.204.63
     username: guest
     password: guest
+
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/Chat
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+       hibernate:
+        show_sql: true
+        format_sql: true
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug

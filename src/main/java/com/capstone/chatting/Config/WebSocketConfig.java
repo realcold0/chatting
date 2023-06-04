@@ -17,20 +17,16 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registry.setPathMatcher(new AntPathMatcher("."));
         registry.setApplicationDestinationPrefixes("/app")
                 .enableStompBrokerRelay("/topic")
-                .setRelayHost("localhost")
+                .setRelayHost("13.209.204.63")
                 .setRelayPort(61613)
                 .setVirtualHost("/")
                 .setClientLogin("guest")
                 .setClientPasscode("guest");
-
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/chat").setAllowedOrigins("*");
     }
-
-
-
 
 }
