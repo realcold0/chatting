@@ -1,32 +1,35 @@
 package com.capstone.chatting.Service;
 
-import com.capstone.chatting.DTO.GroupChatRoomDto;
-import com.capstone.chatting.DTO.MatchingMember;
-import com.capstone.chatting.DTO.MatchingMessage;
-import com.capstone.chatting.DTO.SingleChatRoomDto;
+import com.capstone.chatting.DTO.*;
+import com.capstone.chatting.domain.ChatRecord;
 import com.capstone.chatting.domain.GroupChatRoom;
+import com.capstone.chatting.domain.SingleChatRoom;
+import com.capstone.chatting.repository.ChatRecordRepository;
 import com.capstone.chatting.repository.GroupChatRoomRepository;
 import com.capstone.chatting.repository.SingleChatRoomRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class MatchingService {
 
     @Autowired
-    GroupChatRoomRepository groupChatRoomRepository;
+    private final GroupChatRoomRepository groupChatRoomRepository;
 
     @Autowired
-    SingleChatRoomRepository singleChatRoomRepository;
+    private final SingleChatRoomRepository singleChatRoomRepository;
+
+    @Autowired
+    private final ChatRecordRepository chatRecordRepository;
 
     public void processMatch(MatchingMessage messages){
         List<MatchingMember> members = messages.getMatchingMembers();
@@ -68,6 +71,22 @@ public class MatchingService {
             System.out.println("싱글도 멀티도 아닌 경우입니다.");
             throw new RuntimeException("RabbitMq Matching Queue 에서 잘못된 값을 가져왔습니다.");
         }
+    }
+
+    @Transactional
+    public List<SingleChatRoom> searchSingleRoom(Long mid1, Long mid2){
+        return singleChatRoomRepository.findSingleRoomById(mid1, mid2);
+    }
+
+    @Transactional
+    public List<ChatRecord> searchSingleRecord(Long singleId){
+        return chatRecordRepository.findSingleChatById(singleId);
+    }
+
+    @Transactional
+    public List<ChatRecord> searchGroupRecord(Long groupId){
+        return chatRecordRepository.findGroupChatById(groupId);
+
     }
 
 }

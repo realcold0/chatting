@@ -81,7 +81,6 @@ public class RabbitConfig {
     public SimpleRabbitListenerContainerFactory simpleRabbitListenerContainerFactory(ConnectionFactory connectionFactory) {
         final SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
-        factory.
         factory.setMessageConverter(jsonMessageConverter());
         return factory;
     }

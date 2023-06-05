@@ -2,6 +2,7 @@ package com.capstone.chatting.Controller;
 
 import com.capstone.chatting.ChatWebSocketHandler;
 import com.capstone.chatting.Service.MessageSenderService;
+import com.capstone.chatting.repository.ChatRecordRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.amqp.core.Queue;
@@ -34,6 +35,8 @@ public class ChatController {
         System.out.println("send message : " + chatMessage);
 
         template.convertAndSend(CHAT_EXCHANGE_NAME, "room." + chatRoomId,chatMessage);
+
+        // messageSenderService.recordMessage(ChatMessage chatMessage);
     }
 
 //    @RabbitListener(queues = CHAT_QUEUE_NAME)

@@ -7,30 +7,31 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Table(name = "CHAT_RECORD")
+@Table(name = "chat_record")
 public class ChatRecord {
 
     @Id @GeneratedValue
-    @Column(name = "CHAT_RECORD_ID")
+    @Column(name = "chat_record_id")
     private Long id;
 
-    private Long roomId;
+    private Long room_id;
 
-    private Long senderId;
+    private Long sender_id;
 
     @Enumerated(EnumType.STRING)
-    private RoomType roomType;
+    private RoomType room_type;
 
     private String content;
 
-    private LocalDateTime sendTime;
+    private LocalDateTime send_time;
 
     protected ChatRecord(){}
-    public ChatRecord(Long roomId, Long senderId, RoomType roomType, String content) {
-        this.roomId = roomId;
-        this.senderId = senderId;
-        this.roomType = roomType;
+
+    public ChatRecord(Long room_id, Long sender_id, RoomType room_type, String content) {
+        this.room_id = room_id;
+        this.sender_id = sender_id;
+        this.room_type = room_type;
         this.content = content;
-        this.sendTime = LocalDateTime.now();
+        this.send_time = LocalDateTime.now();
     }
 }

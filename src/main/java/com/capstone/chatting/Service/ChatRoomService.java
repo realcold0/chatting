@@ -1,11 +1,13 @@
 package com.capstone.chatting.Service;
 
 import com.capstone.chatting.DTO.ChatRoom;
+import com.capstone.chatting.domain.SingleChatRoom;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
@@ -46,4 +48,5 @@ public class ChatRoomService {
             log.error(e.getMessage(), e);
         }
     }
+
 }
