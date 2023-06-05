@@ -25,7 +25,7 @@ public class ChatAPIController {
     /*
      *
      * 싱글 채팅 리스트
-     *
+     * /api/v1/single_room?mid1={id}&mid2={id}
      */
     @GetMapping("/api/v1/single_room")
     public Result getSingleRoomList(@RequestParam("mid1") Long mid1,
@@ -41,6 +41,7 @@ public class ChatAPIController {
     /*
      * 채팅 내역
      * single
+     * /api/v1/single_records?singleId={id}
      */
     @GetMapping("/api/v1/single_recodes")
     public Result getSingleChatRecord(@RequestParam("singleId") Long singleId){
@@ -57,6 +58,7 @@ public class ChatAPIController {
 
     /*
      *  Group 채팅 내역
+     *  /api/v1/group_records?groupId={id}
      */
     @GetMapping("/api/v1/group_records")
     public Result getChatRecords(@RequestParam("groupId") Long groupId) {
