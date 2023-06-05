@@ -40,7 +40,7 @@ public class MatchingService {
         else if (members.size() == 6){
             List<MatchingMember> maleList = new ArrayList<>();
             List<MatchingMember> femaleList = new ArrayList<>();
-            List<Long> mid = null;
+            List<Long> mid = new ArrayList<>();
 
             for(MatchingMember member: members){
                 mid.add(member.getId());
