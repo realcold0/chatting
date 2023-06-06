@@ -20,8 +20,10 @@ public class ChatRecordDto {
         this.content = content;
     }
 
+    /*
     public ChatRecord createChatRecord(){
         RoomType room = roomType.equals("S") ? RoomType.S : RoomType.M;
         return new ChatRecord(roomId, senderId, room, content);
     }
+    */
 }

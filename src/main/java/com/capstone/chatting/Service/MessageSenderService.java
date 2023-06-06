@@ -8,6 +8,7 @@ import com.capstone.chatting.repository.ChatRecordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,16 +18,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MessageSenderService {
 
-    private final RabbitTemplate rabbitTemplate;
-    ChatRecordRepository chatRecordRepository;
+    private final RabbitTemplate template;
 
-    public void sendMessage(String message) {
-        System.out.println("message Send!! by Rabbit");
-        rabbitTemplate.convertAndSend("topic.exchange", "sample.realcold.#", message);
-    }
+    private final ChatRecordRepository chatRecordRepository;
 
-    public void recordMessage(ChatRecordDto message){
-        chatRecordRepository.save(message.createChatRecord());
+    private final static String CHAT_EXCHANGE_NAME = "amq.topic";
+
+
+    public void recordMessage(String chatRoomId ,ChatMessage message){
+        System.out.println("send message : " + message);
+        template.convertAndSend(CHAT_EXCHANGE_NAME, "room." + chatRoomId, message);
+        chatRecordRepository.save(message.createChatMessage());
     }
 
 
