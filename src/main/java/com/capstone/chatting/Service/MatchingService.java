@@ -31,10 +31,11 @@ public class MatchingService {
     @Autowired
     private final ChatRecordRepository chatRecordRepository;
 
+    @Transactional
     public void processMatch(MatchingMessage messages){
         List<MatchingMember> members = messages.getMatchingMembers();
 
-        int jerryId;
+        Long jerry_id;
 
         if(members.size() == 2){
             SingleChatRoomDto singleChatRoomDto = new SingleChatRoomDto(members.get(0).getId(), members.get(1).getId());
@@ -55,17 +56,22 @@ public class MatchingService {
 
             Random rd = new Random();
             rd.setSeed(System.currentTimeMillis());
-            jerryId = (int)(rd.nextInt()%4);
+            int a = rd.nextInt()%4;
 
 
             if(maleList.size() == 4){//남자가 4명이면 이 중에 1명이 제리
-                GroupChatRoomDto groupChatRoomDto = new GroupChatRoomDto(mid.get(0),mid.get(1),mid.get(2),mid.get(3),mid.get(4),mid.get(5),maleList.get(jerryId).getId());
+                jerry_id = maleList.get(a).getId();
+                GroupChatRoomDto groupChatRoomDto = new GroupChatRoomDto(mid.get(0),mid.get(1),mid.get(2),mid.get(3),mid.get(4),mid.get(5),jerry_id);
                 groupChatRoomRepository.save(groupChatRoomDto.createGroupChatRoom());
             }
             else{ //여자가 4명이면 이 중에 1명이 제리
-                GroupChatRoomDto groupChatRoomDto = new GroupChatRoomDto(mid.get(0),mid.get(1),mid.get(2),mid.get(3),mid.get(4),mid.get(5),femaleList.get(jerryId).getId());
+                jerry_id = femaleList.get(a).getId();
+                GroupChatRoomDto groupChatRoomDto = new GroupChatRoomDto(mid.get(0),mid.get(1),mid.get(2),mid.get(3),mid.get(4),mid.get(5),jerry_id);
                 groupChatRoomRepository.save(groupChatRoomDto.createGroupChatRoom());
             }
+
+            MatchingResultDto resultDto = groupChatRoomRepository.findMatchingResultDtoByJerryId(jerry_id).get(0);
+            //승환아 이걸 처리해줘
         }
         else {
             System.out.println("싱글도 멀티도 아닌 경우입니다.");
@@ -74,8 +80,8 @@ public class MatchingService {
     }
 
     @Transactional
-    public List<SingleChatRoom> searchSingleRoom(Long mid1, Long mid2){
-        return singleChatRoomRepository.findSingleRoomById(mid1, mid2);
+    public List<SingleChatRoom> searchSingleRoom(Long mid){
+        return singleChatRoomRepository.findSingleRoomById(mid);
     }
 
     @Transactional
@@ -87,6 +93,19 @@ public class MatchingService {
     public List<ChatRecord> searchGroupRecord(String groupId){
         return chatRecordRepository.findGroupChatById(groupId);
 
+    }
+
+    @Transactional
+    public List<GroupChatRoom> searchGroupRoom(Long mid){
+        return groupChatRoomRepository.findGroupRoomById(mid);
+    }
+
+    @Transactional
+    public GroupChatRoom updateGroupChatStatus(String roomId){
+        Long id = Long.parseLong(roomId);
+        GroupChatRoom groupChatRoom = groupChatRoomRepository.findById(id).get();
+        groupChatRoom.setStatus(false);
+        return groupChatRoom;
     }
 
 }

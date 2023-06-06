@@ -11,6 +11,6 @@ import java.util.List;
 public interface SingleChatRoomRepository extends JpaRepository<SingleChatRoom, Long> {
 
     @Query("select s from SingleChatRoom s where s.mid1 = :mid1 or s.mid2 = :mid2 order by s.created_at")
-    List<SingleChatRoom> findSingleRoomById(@Param("mid1") Long mid1, @Param("mid2") Long mid2);
+    List<SingleChatRoom> findSingleRoomById(@Param("mid") Long mid);
 
 }

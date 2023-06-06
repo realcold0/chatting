@@ -25,14 +25,13 @@ public class ChatAPIController {
     /*
      *
      * 싱글 채팅 리스트
-     * /api/v1/single_room?mid1={id}&mid2={id}
+     * /api/v1/single_room?mid={id}
      */
     @GetMapping("/api/v1/single_room")
-    public Result getSingleRoomList(@RequestParam("mid1") Long mid1,
-                                    @RequestParam("mid2") Long mid2){
+    public Result getSingleRoomList(@RequestParam("mid") Long mid){
 
         List<SingleChatRoom> collection = new ArrayList<>();
-        collection = matchingService.searchSingleRoom(mid1, mid2);
+        collection = matchingService.searchSingleRoom(mid);
 
         return new Result(collection.size(), collection);
     }
@@ -68,5 +67,29 @@ public class ChatAPIController {
         return new Result(collection.size(), collection);
     }
 
+    /*
+
+        Group 채팅
+        /api/v1/group_room?mid={id}
+
+     */
+
+    @GetMapping("/api/v1/group_room")
+    public Result getGroupRoomList(@RequestParam("mid") Long mid){
+        List<GroupChatRoom> collection = new ArrayList<>();
+        collection = matchingService.searchGroupRoom(mid);
+
+        return new Result(collection.size(), collection);
+    }
+
+    /*
+    *   GroupChatRoom Status false 로 변경
+    *   /api/v1/group_status/{id}
+    *
+    */
+    @PostMapping("/api/v1/group_status/{roomId}")
+    public GroupChatRoom setGroupStatusFalse(@PathVariable("roomId") String roomId){
+        return matchingService.updateGroupChatStatus(roomId);
+    }
 
 }
