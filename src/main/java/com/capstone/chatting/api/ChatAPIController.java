@@ -43,8 +43,8 @@ public class ChatAPIController {
      * single
      * /api/v1/single_records?singleId={id}
      */
-    @GetMapping("/api/v1/single_recodes")
-    public Result getSingleChatRecord(@RequestParam("singleId") Long singleId){
+    @GetMapping("/api/v1/single_records")
+    public Result getSingleChatRecord(@RequestParam("singleId") String singleId){
 
         List<ChatRecord> collection = new ArrayList<>();
         collection =  matchingService.searchSingleRecord(singleId);
@@ -61,7 +61,7 @@ public class ChatAPIController {
      *  /api/v1/group_records?groupId={id}
      */
     @GetMapping("/api/v1/group_records")
-    public Result getChatRecords(@RequestParam("groupId") Long groupId) {
+    public Result getChatRecords(@RequestParam("groupId") String groupId) {
         List<ChatRecord> collection = new ArrayList<>();
         collection =  matchingService.searchGroupRecord(groupId);
 

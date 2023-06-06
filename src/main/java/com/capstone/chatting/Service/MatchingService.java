@@ -79,12 +79,12 @@ public class MatchingService {
     }
 
     @Transactional
-    public List<ChatRecord> searchSingleRecord(Long singleId){
+    public List<ChatRecord> searchSingleRecord(String singleId){
         return chatRecordRepository.findSingleChatById(singleId);
     }
 
     @Transactional
-    public List<ChatRecord> searchGroupRecord(Long groupId){
+    public List<ChatRecord> searchGroupRecord(String groupId){
         return chatRecordRepository.findGroupChatById(groupId);
 
     }

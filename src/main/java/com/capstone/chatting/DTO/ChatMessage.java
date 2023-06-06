@@ -1,5 +1,6 @@
 package com.capstone.chatting.DTO;
 
+import com.capstone.chatting.domain.ChatRecord;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import lombok.*;
@@ -17,11 +18,20 @@ public class ChatMessage {
         Enter,TALK,Leave
     }
 
+    public enum RoomType{
+        Single, Multi
+    }
+
     private MessageType type;
     private String roomId;
     private String sender;
     private String message;
+    private RoomType roomType;
 
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    private LocalDateTime regDate;
+
+    public ChatRecord createChatMessage(){
+        return new ChatRecord(type,roomId,sender,message,roomType);
+    }
+    //@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    //private LocalDateTime regDate;
 }

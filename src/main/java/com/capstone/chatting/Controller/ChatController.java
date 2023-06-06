@@ -1,6 +1,7 @@
 package com.capstone.chatting.Controller;
 
 import com.capstone.chatting.ChatWebSocketHandler;
+import com.capstone.chatting.DTO.ChatMessage;
 import com.capstone.chatting.Service.MessageSenderService;
 import com.capstone.chatting.repository.ChatRecordRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.socket.TextMessage;
@@ -22,7 +24,6 @@ import java.util.Map;
 @Log4j2
 public class ChatController {
 
-    private final RabbitTemplate template;
 
     private final Map<String, WebSocketSession> sessions;
     private final static String CHAT_EXCHANGE_NAME = "amq.topic";
@@ -31,12 +32,9 @@ public class ChatController {
     private final MessageSenderService messageSenderService;
 
     @MessageMapping("chat.enter.{chatRoomId}")
-    public void sendMessage(String chatMessage, @DestinationVariable String chatRoomId){
-        System.out.println("send message : " + chatMessage);
+    public void sendMessage(@Payload ChatMessage chatMessage, @DestinationVariable String chatRoomId){
 
-        template.convertAndSend(CHAT_EXCHANGE_NAME, "room." + chatRoomId,chatMessage);
-
-        // messageSenderService.recordMessage(ChatMessage chatMessage);
+         messageSenderService.recordMessage(chatRoomId,chatMessage);
     }
 
 //    @RabbitListener(queues = CHAT_QUEUE_NAME)
