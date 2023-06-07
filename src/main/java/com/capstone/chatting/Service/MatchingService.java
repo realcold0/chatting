@@ -8,7 +8,9 @@ import com.capstone.chatting.repository.ChatRecordRepository;
 import com.capstone.chatting.repository.GroupChatRoomRepository;
 import com.capstone.chatting.repository.SingleChatRoomRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,14 +24,14 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class MatchingService {
 
-    @Autowired
+
     private final GroupChatRoomRepository groupChatRoomRepository;
 
-    @Autowired
     private final SingleChatRoomRepository singleChatRoomRepository;
 
-    @Autowired
     private final ChatRecordRepository chatRecordRepository;
+
+
 
     @Transactional
     public void processMatch(MatchingMessage messages){
@@ -56,7 +58,7 @@ public class MatchingService {
 
             Random rd = new Random();
             rd.setSeed(System.currentTimeMillis());
-            int a = rd.nextInt()%4;
+            int a = rd.nextInt(4);
 
 
             if(maleList.size() == 4){//남자가 4명이면 이 중에 1명이 제리
@@ -75,7 +77,7 @@ public class MatchingService {
             }
 
             MatchingResultDto resultDto = groupChatRoomRepository.findMatchingResultDtoByJerryId(jerry_id).get(0);
-            //승환아 이걸 처리해줘
+            sendClientMatchingResult(resultDto);
         }
         else {
             System.out.println("싱글도 멀티도 아닌 경우입니다.");
@@ -112,4 +114,9 @@ public class MatchingService {
         return groupChatRoom;
     }
 
+    @SendTo("/topic/default")
+    public MatchingResultDto sendClientMatchingResult(MatchingResultDto matchingResultDto)
+    {
+        return matchingResultDto;
+    }
 }

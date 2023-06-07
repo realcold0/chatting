@@ -12,6 +12,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.socket.TextMessage;
@@ -35,6 +36,14 @@ public class ChatController {
     public void sendMessage(@Payload ChatMessage chatMessage, @DestinationVariable String chatRoomId){
 
          messageSenderService.recordMessage(chatRoomId,chatMessage);
+    }
+
+
+    @MessageMapping("sendMessage")
+    @SendTo("/topic/default")
+    public String send(String str)
+    {
+        return str;
     }
 
 //    @RabbitListener(queues = CHAT_QUEUE_NAME)
