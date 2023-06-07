@@ -31,6 +31,7 @@ public class MatchingService {
 
     private final ChatRecordRepository chatRecordRepository;
 
+    private final RabbitTemplate template;
 
 
     @Transactional
@@ -114,9 +115,9 @@ public class MatchingService {
         return groupChatRoom;
     }
 
-    @SendTo("/topic/default")
-    public MatchingResultDto sendClientMatchingResult(MatchingResultDto matchingResultDto)
+
+    public void sendClientMatchingResult(MatchingResultDto matchingResultDto)
     {
-        return matchingResultDto;
+        template.convertAndSend("amq.topic","default",matchingResultDto);
     }
 }
