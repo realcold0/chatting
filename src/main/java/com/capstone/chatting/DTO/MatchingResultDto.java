@@ -9,15 +9,15 @@ import java.time.LocalDateTime;
 @Setter
 public class MatchingResultDto {
     //회원 정보
-    private String mid1;
-    private String mid2;
-    private String mid3;
-    private String mid4;
-    private String mid5;
-    private String mid6;
+    private Long mid1;
+    private Long mid2;
+    private Long mid3;
+    private Long mid4;
+    private Long mid5;
+    private Long mid6;
 
     //제리 정보
-    private String jerry_id;
+    private Long jerry_id;
 
     //room id
     private Long id;
@@ -27,7 +27,7 @@ public class MatchingResultDto {
 
     private boolean status;
 
-    public MatchingResultDto(String mid1, String mid2, String mid3, String mid4, String mid5, String mid6, String jerry_id, Long id, LocalDateTime created_at, boolean status) {
+    public MatchingResultDto(Long mid1, Long mid2, Long mid3, Long mid4, Long mid5, Long mid6, Long jerry_id, Long id, LocalDateTime created_at, boolean status) {
         this.mid1 = mid1;
         this.mid2 = mid2;
         this.mid3 = mid3;

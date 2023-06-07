@@ -16,7 +16,7 @@ import org.springframework.web.socket.WebSocketSession;
 
 import java.util.List;
 
-//@Controller
+@Controller
 @Component
 @RequiredArgsConstructor
 @Log4j2

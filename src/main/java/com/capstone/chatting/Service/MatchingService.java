@@ -64,10 +64,14 @@ public class MatchingService {
                 GroupChatRoomDto groupChatRoomDto = new GroupChatRoomDto(mid.get(0),mid.get(1),mid.get(2),mid.get(3),mid.get(4),mid.get(5),jerry_id);
                 groupChatRoomRepository.save(groupChatRoomDto.createGroupChatRoom());
             }
-            else{ //여자가 4명이면 이 중에 1명이 제리
+            else if(femaleList.size() == 4){ //여자가 4명이면 이 중에 1명이 제리
                 jerry_id = femaleList.get(a).getId();
                 GroupChatRoomDto groupChatRoomDto = new GroupChatRoomDto(mid.get(0),mid.get(1),mid.get(2),mid.get(3),mid.get(4),mid.get(5),jerry_id);
                 groupChatRoomRepository.save(groupChatRoomDto.createGroupChatRoom());
+            }
+            else{
+                System.out.println("성비가 4:2로 오지 않았습니다.");
+                throw new RuntimeException("성비가 옳바르게 오지 않았습니다.");
             }
 
             MatchingResultDto resultDto = groupChatRoomRepository.findMatchingResultDtoByJerryId(jerry_id).get(0);

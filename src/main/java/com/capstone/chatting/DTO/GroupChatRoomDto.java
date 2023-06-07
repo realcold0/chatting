@@ -9,25 +9,25 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class GroupChatRoomDto {
-    private Long mid_1;
-    private Long mid_2;
-    private Long mid_3;
-    private Long mid_4;
-    private Long mid_5;
-    private Long mid_6;
+    private Long mid1;
+    private Long mid2;
+    private Long mid3;
+    private Long mid4;
+    private Long mid5;
+    private Long mid6;
     private Long jerryId;
 
-    public GroupChatRoomDto(Long mid_1, Long mid_2, Long mid_3, Long mid_4, Long mid_5, Long mid_6, Long jerryId) {
-        this.mid_1 = mid_1;
-        this.mid_2 = mid_2;
-        this.mid_3 = mid_3;
-        this.mid_4 = mid_4;
-        this.mid_5 = mid_5;
-        this.mid_6 = mid_6;
+    public GroupChatRoomDto(Long mid1, Long mid2, Long mid3, Long mid4, Long mid5, Long mid6, Long jerryId) {
+        this.mid1 = mid1;
+        this.mid2 = mid2;
+        this.mid3 = mid3;
+        this.mid4 = mid4;
+        this.mid5 = mid5;
+        this.mid6 = mid6;
         this.jerryId = jerryId;
     }
 
     public GroupChatRoom createGroupChatRoom(){
-        return new GroupChatRoom(mid_1,mid_2,mid_3,mid_4,mid_5,mid_6,jerryId);
+        return new GroupChatRoom(mid1,mid2,mid3,mid4,mid5,mid6,jerryId);
     }
 }

@@ -40,7 +40,7 @@ public class ChatAPIController {
     /*
      * 채팅 내역
      * single
-     * /api/v1/single_records?singleId={id}
+     * /api/v1/single_records?singleId={singleId}
      */
     @GetMapping("/api/v1/single_records")
     public Result getSingleChatRecord(@RequestParam("singleId") String singleId){
@@ -57,7 +57,7 @@ public class ChatAPIController {
 
     /*
      *  Group 채팅 내역
-     *  /api/v1/group_records?groupId={id}
+     *  /api/v1/group_records?groupId={groupId}
      */
     @GetMapping("/api/v1/group_records")
     public Result getChatRecords(@RequestParam("groupId") String groupId) {
