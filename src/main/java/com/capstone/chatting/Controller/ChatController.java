@@ -39,13 +39,6 @@ public class ChatController {
     }
 
 
-    @MessageMapping("sendMessage")
-    @SendTo("/topic/default")
-    public String send(String str)
-    {
-        return str;
-    }
-
 //    @RabbitListener(queues = CHAT_QUEUE_NAME)
 //    public void handleMessage(String message) {
 //        // RabbitMQ로부터 수신한 메시지 처리
