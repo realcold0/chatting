@@ -69,7 +69,7 @@ public class RabbitConfig {
         return rabbitTemplate;
     }
     @Bean
-    public ConnectionFactory connectionFactory(){
+        public ConnectionFactory connectionFactory(){
         CachingConnectionFactory factory = new CachingConnectionFactory();
         factory.setHost("13.209.204.63");
         factory.setUsername("guest");

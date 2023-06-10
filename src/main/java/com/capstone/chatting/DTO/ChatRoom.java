@@ -29,17 +29,17 @@ public class ChatRoom {
                 .build();
     }
 
-    public void handlerActions(WebSocketSession session, ChatMessage chatMessage, ChatRoomService chatService) {
-        if (chatMessage.getType().equals(ChatMessage.MessageType.Enter)) {
-            sessions.add(session);
-            chatMessage.setMessage(chatMessage.getSender() + "님이 입장했습니다.");
-        }
-        sendMessage(chatMessage, chatService);
+//    public void handlerActions(WebSocketSession session, ChatMessage chatMessage, ChatRoomService chatService) {
+//        if (chatMessage.getType().equals(ChatMessage.MessageType.Enter)) {
+//            sessions.add(session);
+//            chatMessage.setMessage(chatMessage.getSender() + "님이 입장했습니다.");
+//        }
+//        sendMessage(chatMessage, chatService);
+//
+//    }
 
-    }
-
-    private <T> void sendMessage(T message, ChatRoomService chatService) {
-        sessions.parallelStream()
-                .forEach(session -> chatService.sendMessage(session, message));
-    }
+//    private <T> void sendMessage(T message, ChatRoomService chatService) {
+//        sessions.parallelStream()
+//                .forEach(session -> chatService.sendMessage(session, message));
+//    }
 }
