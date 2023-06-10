@@ -118,6 +118,6 @@ public class MatchingService {
 
     public void sendClientMatchingResult(MatchingResultDto matchingResultDto)
     {
-        template.convertAndSend("amq.topic","default",matchingResultDto);
+        template.convertAndSend("groupRoom.exchange","room.name.group",matchingResultDto);
     }
 }
