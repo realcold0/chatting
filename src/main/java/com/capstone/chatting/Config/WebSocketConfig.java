@@ -34,7 +34,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/chat").setAllowedOrigins("*");
+        registry.addEndpoint("/chat", "/matching").setAllowedOrigins("*");
     }
 
     @Override
@@ -52,10 +52,6 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                         // 예를 들어, 세션을 어딘가에 맵으로 저장하거나 필요에 따라 다른 작업을 수행할 수 있습니다.
                         String sessionId = accessor.getSessionId();
                         System.out.println("user  session : "+ sessionId);
-
-
-
-
                         // 세션을 저장하는 작업을 수행하세요.
                     }
                 }
