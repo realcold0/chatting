@@ -1,12 +1,16 @@
 package com.capstone.chatting.DTO;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@ToString
 public class MatchingResultDto {
     //회원 정보
     private Long mid1;

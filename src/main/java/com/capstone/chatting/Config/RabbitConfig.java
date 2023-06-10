@@ -50,11 +50,11 @@ public class RabbitConfig {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, true);
         objectMapper.registerModule(dateTimeModule());
-
         Jackson2JsonMessageConverter converter = new Jackson2JsonMessageConverter(objectMapper);
 
         return converter;
     }
+
 
     @Bean
     public Module dateTimeModule() {

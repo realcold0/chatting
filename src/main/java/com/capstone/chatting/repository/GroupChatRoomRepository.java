@@ -16,7 +16,7 @@ public interface GroupChatRoomRepository extends JpaRepository<GroupChatRoom, Lo
 
     @Query("select new com.capstone.chatting.DTO.MatchingResultDto"+
             "(g.mid1, g.mid2, g.mid3, g.mid4, g.mid5, g.mid6, g.jerry_id, g.id, g.created_at, g.status) from"+
-            " GroupChatRoom g where g.jerry_id = :jerry_id order by g.created_at")
+            " GroupChatRoom g where g.jerry_id = :jerry_id order by g.created_at desc")
     List<MatchingResultDto> findMatchingResultDtoByJerryId(@Param("jerry_id") Long jerry_id);
 
 }

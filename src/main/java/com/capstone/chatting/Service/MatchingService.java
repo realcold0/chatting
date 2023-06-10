@@ -118,6 +118,7 @@ public class MatchingService {
 
     public void sendClientMatchingResult(MatchingResultDto matchingResultDto)
     {
+        System.out.println("sendClientMatchingResult 실행");
         template.convertAndSend("groupRoom.exchange","room.name.group",matchingResultDto);
     }
 }
